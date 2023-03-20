@@ -38,7 +38,7 @@ header h1 {
 .leftText {
     max-width: 80%;
     border: 1px solid black;
-    border-radius: 20px 20px 20px 0;
+    border-radius: 10px 10px 10px 0;
     margin-bottom: 8px;
 }
 .leftTime p {
@@ -48,7 +48,7 @@ header h1 {
     max-width: 80%;
     margin: 0 0 0 auto;
     border: 1px solid black;
-    border-radius: 20px 20px 0 20px;
+    border-radius: 10px 10px 0 10px;
     text-align: right;
     margin-bottom: 8px;
 }
@@ -96,13 +96,13 @@ header h1 {
 }
 .login-form {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: space-evenly;
     margin: 10px auto;
-    padding: 10px;
+    padding: 50px;
     width: 50%;
-    height: 100px;
+    height: 400px;
     background: linear-gradient(to bottom, #44c8ec, #748cf8, #0c6178);
-    padding: 30px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
@@ -111,20 +111,22 @@ label {
     color: #444444;
     margin-bottom: 10px;
 }
-#username {
-    width: 50%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
+h2 {
+    font-size: 25px;
+    color: #ffffff;
 }
+#login-btn {
+    display: flex;
+    justify-content: center;
+}
+
 button[type="submit"] {
     padding: 10px;
+    margin: 30px auto;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 20px;
     color: #444444;
     background-color: transparent;
 }
