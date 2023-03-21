@@ -29,6 +29,12 @@ header h1 {
     border: 1px solid grey;
     border-radius: 20px;
     background: linear-gradient(to bottom, #44c8ec, #748cf8, #0c6178);
+    overflow-y: scroll;
+}
+
+.mainWraper::-webkit-scrollbar {
+    display: none;
+    width: 0;
 }
 .mainWraper p {
     font-size: 12px;
@@ -37,26 +43,18 @@ header h1 {
 }
 .leftText {
     max-width: 80%;
-    border: 1px solid black;
     border-radius: 10px 10px 10px 0;
     margin-bottom: 8px;
 }
-.leftTime p {
-    font-size: 8px;
+.name {
+    text-align: right;
 }
 .rightText {
     max-width: 80%;
     margin: 0 0 0 auto;
-    border: 1px solid black;
     border-radius: 10px 10px 0 10px;
     text-align: right;
     margin-bottom: 8px;
-}
-.rightTime {
-    margin: 0 0 0 auto;
-}
-.rightTime p {
-    font-size: 8px;
 }
 .chatText {
     padding: 10px;
