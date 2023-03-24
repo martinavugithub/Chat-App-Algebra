@@ -21,7 +21,8 @@ header h1 {
 }
 .mainWraper {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
+    align-items: flex-start;
     margin: 10px auto;
     padding: 10px;
     width: 50%;
@@ -31,7 +32,6 @@ header h1 {
     background: linear-gradient(to bottom, #44c8ec, #748cf8, #0c6178);
     overflow-y: scroll;
 }
-
 .mainWraper::-webkit-scrollbar {
     display: none;
     width: 0;
@@ -41,16 +41,19 @@ header h1 {
     line-height: 16px;
     padding: 5px;
 }
-.leftText {
+.newMessage {
+    margin-top: auto;
+    margin-bottom: 6px;
     max-width: 80%;
+  }
+.leftText {
     border-radius: 10px 10px 10px 0;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
-.name {
+.nameRight {
     text-align: right;
 }
 .rightText {
-    max-width: 80%;
     margin: 0 0 0 auto;
     border-radius: 10px 10px 0 10px;
     text-align: right;
