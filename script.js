@@ -18,11 +18,11 @@ if (enterRoomButton) {
   enterRoomButton.addEventListener('click', function() {
     const randomIndex = Math.floor(Math.random() * pokemonNames.length);
     const randomPokemonName = pokemonNames[randomIndex];
+    const userColor = colors[Math.floor(Math.random() * colors.length)];
     localStorage.setItem('userName', randomPokemonName);
     localStorage.setItem('userColor', userColor);
 
     const CHANNEL_ID = 'gM860Lw7cfNCaIcl';
-    const userColor = colors[Math.floor(Math.random() * colors.length)];
     const drone = new ScaleDrone(CHANNEL_ID, {
       data: {
         name: randomPokemonName,
@@ -43,7 +43,6 @@ function entryRoom() {
 const CHANNEL_ID = 'gM860Lw7cfNCaIcl';
 const drone = new ScaleDrone(CHANNEL_ID);
 
-
 drone.on('open', error => {
   if (error) {
     console.error(error);
@@ -54,85 +53,66 @@ drone.on('open', error => {
 
   // create a new room for the user to join
   const roomName = 'chat-room';
-  const room = drone.subscribe(roomName);
-});
-// get the elements by their class name
-const mainWraper = document.querySelector('.mainWraper');
-const nameRight = document.querySelector('.nameRight');
-const leftText = document.querySelector('.leftText p');
-const nameLeft = document.querySelector('.nameLeft');
-const rightText = document.querySelector('.rightText p');
-const chatInput = document.querySelector('#chat');
-const sendBtn = document.querySelector('.sendBtn');
+  const roomChannel = drone.subscribe(roomName);
 
-let userName = '';
-let userColor = '';
+  // get the elements by their class name
+  const mainWraper = document.querySelector('.mainWraper');
+  const nameRight = document.querySelector('.nameRight');
+  const leftText = document.querySelector('.leftText p');
+  const nameLeft = document.querySelector('.nameLeft');
+  const rightText = document.querySelector('.rightText p');
+  const chatInput = document.querySelector('#chat');
+  const sendBtn = document.querySelector('.sendBtn');
 
-if (sendBtn) {
-  sendBtn.addEventListener('click', sendMessage);
-}
-
-function sendMessage() {
-  // get the value of the chat input
-  const message = chatInput.value;
-  userName = localStorage.getItem('userName');
-  userColor = localStorage.getItem('userColor');
-
-  // create a new message element
-  const newMessage = document.createElement('div');
-
-  // set the message content based on the input value
-  newMessage.innerHTML = `
-  <p class="nameLeft" style="color: ${userColor};">${nameLeft.textContent} ${userName}</p>
-  <div class="leftText">
-    <p style="color: ${userColor};">${message}</p>
-  </div>
-`;
-
-  // insert the new message at the top of the mainWraper div
-  mainWraper.insertAdjacentElement('afterbegin', newMessage);
-
-  // clear the chat input
-  chatInput.value = '';
-
-  // send the message to the chat room
-  const droneChannel = 'observable-' + CHANNEL_ID;
-  drone.publish({
-    room: 'chat-room',
-    message: {
-      user: nameLeft.textContent,
-      message: message
-    }
-  });
-}
-
-// Listen for incoming messages on chat room channel
-const roomChannel = drone.subscribe('chat-room');
-
-roomChannel.on('open', error => {
-  if (error) {
-    console.error(error);
-    return;
+  if (sendBtn) {
+    sendBtn.addEventListener('click', sendMessage);
   }
 
-  roomChannel.on('data', (data) => {
-    console.log('Received message:', data);
-    // Display message in chat room UI
+  function sendMessage() {
+    // get the value of the chat input
+    const message = chatInput.value;
+    const userName = localStorage.getItem('userName');
+    const userColor = localStorage.getItem('userColor');
+
+    // create a new message element
+    const newMessage = document.createElement('div');
+
+    // set the message content based on the input value
+    newMessage.innerHTML = `
+      <p class="nameLeft" style="color: ${userColor};">${nameLeft.textContent} ${userName}</p>
+      <div class="leftText">
+        <p style="color: ${userColor};">${message}</p>
+      </div>
+    `;
+
+    // insert the new message at the top of the mainWraper div
+    mainWraper.insertAdjacentElement('afterbegin', newMessage);
+
+    // clear the chat input
+    chatInput.value = '';
+
+    // send the message to the chat room
+    console.log(`Sending message: "${message}" from user "${userName}"`);
+    drone.publish({
+      room: 'chat-room',
+      message: {
+        name: nameLeft.textContent,
+        data: message,
+        color: userColor // add the color property to the message object
+      }
+    });
+    
+  }
+
+  // Listen for incoming messages on chat room channel
+  roomChannel.on('data', (message) => {
     const newMessage = document.createElement('div');
     newMessage.innerHTML = `
-      <p class="nameRight" style="color: ${data.userColor};">${nameRight.textContent} ${data.user}</p>
+      <p class="nameRight" style="color: ${message.color}">${message.name}</p>
       <div class="rightText">
-        <p style="color: ${data.userColor};">${data.message}</p>
-      </div>`;
+        <p>${message.data}</p>
+      </div>
+    `;
     mainWraper.insertAdjacentElement('afterbegin', newMessage);
   });
-});
-// send the message to the chat room
-const droneChannel = 'observable-' + CHANNEL_ID;
-drone.publish({
-  room: 'chat-room',
-  message: {
-    user: nameRight.textContent,
-    message: message
-  }
-});
+});  
