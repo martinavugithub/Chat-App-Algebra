@@ -1,48 +1,26 @@
-const pokemonNames = [
-  'Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu', 'Jigglypuff', 'Meowth', 'Psyduck', 'Snorlax', 'Dragonite', 'Mewtwo', 'Chikorita',
-  'Cyndaquil', 'Totodile', 'Togepi', 'Mareep', 'Typhlosion', 'Feraligatr', 'Unown', 'Wobbuffet', 'Girafarig', 'Shuckle', 'Swinub',
-  'Lugia', 'Ho-Oh', 'Treecko', 'Torchic', 'Mudkip', 'Beautifly', 'Mightyena', 'Wurmple', 'Gardevoir', 'Exploud', 'Kyogre', 'Groudon',
-  'Rayquaza', 'Turtwig', 'Chimchar', 'Piplup', 'Luxray', 'Lucario'
-];
-
-const colors = [
-  '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D', '#80B300', '#809900',
-  '#E6B3B3', '#6680B3', '#66991A', '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC', '#66994D', '#B366CC', '#4D8000', '#B33300', 
-  '#CC80CC', '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399', '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', '#4D8066', 
-  '#809980', '#E6FF80', '#1AFF33', '#999933', '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', '#E64D66', '#4DB380', '#FF4D4D', 
-  '#99E6E6', '#6666FF'
-];
-
-const enterRoomButton = document.getElementById('login-btn');
-if (enterRoomButton) {
-  enterRoomButton.addEventListener('click', function() {
-    const randomIndex = Math.floor(Math.random() * pokemonNames.length);
-    const randomPokemonName = pokemonNames[randomIndex];
-    const userColor = colors[Math.floor(Math.random() * colors.length)];
-    localStorage.setItem('userName', randomPokemonName);
-    localStorage.setItem('userColor', userColor);
-
-    const CHANNEL_ID = 'gM860Lw7cfNCaIcl';
-    const drone = new ScaleDrone(CHANNEL_ID, {
-      data: {
-        name: randomPokemonName,
-        color: userColor,
-      },
-    });
-  });
-}
-
-function entryRoom() {  
-  const userName = localStorage.getItem('userName');
-  const userColor = localStorage.getItem('userColor');
-  
-  alert(`Welcome to the chat room! Your Pokémon name is: ${userName} and your color is: ${userColor}`);
-  window.open('chatRoom.html');
-}
-
+// Scaledrone channel ID
 const CHANNEL_ID = 'gM860Lw7cfNCaIcl';
+
+// Connect to Scaledrone
 const drone = new ScaleDrone(CHANNEL_ID);
 
+// Generate a random color for the user
+const randomColor = () => {
+  return '#' + Math.floor(Math.random() * 0xffffff).toString(16);
+};
+
+// Generate a random Pokemon name for the user
+const randomPokemon = () => {
+  const pokemonNames = [
+    'Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu', 'Jigglypuff', 'Meowth', 'Psyduck', 'Snorlax', 'Dragonite', 'Mewtwo', 'Chikorita',
+    'Cyndaquil', 'Totodile', 'Togepi', 'Mareep', 'Typhlosion', 'Feraligatr', 'Unown', 'Wobbuffet', 'Girafarig', 'Shuckle', 'Swinub',
+    'Lugia', 'Ho-Oh', 'Treecko', 'Torchic', 'Mudkip', 'Beautifly', 'Mightyena', 'Wurmple', 'Gardevoir', 'Exploud', 'Kyogre', 'Groudon',
+    'Rayquaza', 'Turtwig', 'Chimchar', 'Piplup', 'Luxray', 'Lucario'
+  ];
+  return pokemonNames[Math.floor(Math.random() * pokemonNames.length)];
+};
+
+// Wait for Scaledrone connection to be established
 drone.on('open', error => {
   if (error) {
     console.error(error);
@@ -51,68 +29,41 @@ drone.on('open', error => {
 
   console.log('Connected to Scaledrone');
 
-  // create a new room for the user to join
+  // Hide the chat from the lobby
+  const mainWraper = document.querySelector('.mainWraper');
+  mainWraper.style.display = 'none';
+
+  // Hide the chat input and send button
+  const chatInput = document.querySelector('#chat');
+  const sendButton = document.querySelector('.sendBtn');
+  chatInput.style.display = 'none';
+  sendButton.style.display = 'none';
+
+  // Create a new room for the user to join
   const roomName = 'chat-room';
   const roomChannel = drone.subscribe(roomName);
 
-  // get the elements by their class name
-  const mainWraper = document.querySelector('.mainWraper');
-  const nameRight = document.querySelector('.nameRight');
-  const leftText = document.querySelector('.leftText p');
-  const nameLeft = document.querySelector('.nameLeft');
-  const rightText = document.querySelector('.rightText p');
-  const chatInput = document.querySelector('#chat');
-  const sendBtn = document.querySelector('.sendBtn');
+  // Generate a random color and Pokemon name for the user
+  const userColor = randomColor();
+  const username = randomPokemon();
 
-  if (sendBtn) {
-    sendBtn.addEventListener('click', sendMessage);
-  }
+  // Select the login form elements
+  const loginForm = document.querySelector('#login-form');
+  const loginButton = document.querySelector('#login-btn');
+  const pokemonName = document.querySelector('#pokemon-name');
 
-  function sendMessage() {
-    // get the value of the chat input
-    const message = chatInput.value;
-    const userName = localStorage.getItem('userName');
-    const userColor = localStorage.getItem('userColor');
+// Add event listener to the login form
+  loginForm.addEventListener('submit', event => {
+  event.preventDefault();
 
-    // create a new message element
-    const newMessage = document.createElement('div');
+  // Hide the lobby part
+  const lobby = document.querySelector('.login-form');
+  lobby.style.display = 'none';
 
-    // set the message content based on the input value
-    newMessage.innerHTML = `
-      <p class="nameLeft" style="color: ${userColor};">${nameLeft.textContent} ${userName}</p>
-      <div class="leftText">
-        <p style="color: ${userColor};">${message}</p>
-      </div>
-    `;
-
-    // insert the new message at the top of the mainWraper div
-    mainWraper.insertAdjacentElement('afterbegin', newMessage);
-
-    // clear the chat input
-    chatInput.value = '';
-
-    // send the message to the chat room
-    console.log(`Sending message: "${message}" from user "${userName}"`);
-    drone.publish({
-      room: 'chat-room',
-      message: {
-        name: nameLeft.textContent,
-        data: message,
-        color: userColor // add the color property to the message object
-      }
-    });
-    
-  }
-
-  // Listen for incoming messages on chat room channel
-  roomChannel.on('data', (message) => {
-    const newMessage = document.createElement('div');
-    newMessage.innerHTML = `
-      <p class="nameRight" style="color: ${message.color}">${message.name}</p>
-      <div class="rightText">
-        <p>${message.data}</p>
-      </div>
-    `;
-    mainWraper.insertAdjacentElement('afterbegin', newMessage);
+  // Show the chat interface
+  const chat = document.querySelector('.mainWraper');
+  chat.style.display = 'flex';
+  chatInput.style.display = 'block';
+  sendButton.style.display = 'block';
   });
-});  
+});
