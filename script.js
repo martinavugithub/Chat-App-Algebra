@@ -29,41 +29,16 @@ drone.on('open', error => {
 
   console.log('Connected to Scaledrone');
 
-  // Hide the chat from the lobby
-  const mainWraper = document.querySelector('.mainWraper');
-  mainWraper.style.display = 'none';
-
-  // Hide the chat input and send button
-  const chatInput = document.querySelector('#chat');
-  const sendButton = document.querySelector('.sendBtn');
-  chatInput.style.display = 'none';
-  sendButton.style.display = 'none';
-
-  // Create a new room for the user to join
-  const roomName = 'chat-room';
-  const roomChannel = drone.subscribe(roomName);
-
-  // Generate a random color and Pokemon name for the user
-  const userColor = randomColor();
-  const username = randomPokemon();
-
-  // Select the login form elements
-  const loginForm = document.querySelector('#login-form');
-  const loginButton = document.querySelector('#login-btn');
-  const pokemonName = document.querySelector('#pokemon-name');
-
-// Add event listener to the login form
-  loginForm.addEventListener('submit', event => {
-  event.preventDefault();
-
-  // Hide the lobby part
-  const lobby = document.querySelector('.login-form');
-  lobby.style.display = 'none';
-
-  // Show the chat interface
-  const chat = document.querySelector('.mainWraper');
-  chat.style.display = 'flex';
-  chatInput.style.display = 'block';
-  sendButton.style.display = 'block';
+  // Add event listener for submit event on login form
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', event => {
+    event.preventDefault(); // Prevent form submission and page reload
+    const chatInterface = document.getElementById('chat-interface');
+    const loginForm = document.querySelector('.login-form');
+    chatInterface.style.display = 'block'; // Show chat interface
+    loginForm.style.display = 'none'; // Hide login form
   });
+  
 });
+
+
