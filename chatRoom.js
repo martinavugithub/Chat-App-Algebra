@@ -83,26 +83,14 @@ room.on('member_join', member => {
   }
 });
 
-;
+
 room.on('message', message => {
-  const {data, clientId, member} = message;
-  const {content} = data;
+  const { content, name, color } = message.data;
   const newMessage = document.createElement('p');
-
-  console.log('Received message:', message);
-  console.log('Members:', members);
-
-  // Get the color and name of the member who sent the message
- 
-  const color = clientData.color;
-  const name = clientData.name || clientName;
-
-  // Set the HTML content of the <p> element
-  newMessage.innerHTML = `<span style="color: ${color};">${name}: </span>${content}`;
-  
-  // Append the new <p> element to the "messages" div
+  newMessage.innerHTML = `<span style="color: ${color};">${name}: </span><span style="color: ${color};">${content}</span>`;
   messages.appendChild(newMessage);
 });
+
 
 sendButton.addEventListener('click', e => {
   e.preventDefault();
@@ -113,17 +101,18 @@ sendButton.addEventListener('click', e => {
   }
 
   console.log('Sending message:', chatInput.value);
-  console.log('Client name:', clientName);
-  console.log('Client data:', clientData);
+
+  const message = {
+    content: chatInput.value,
+    name: clientName,
+    color: clientColor,
+  };
 
   drone.publish({
     room: ROOM_NAME,
-    message: {
-      content: chatInput.value,
-      clientName: clientName,
-      color: clientData.color
-    }
+    message
   });
+
   chatInput.value = '';
 });
 
