@@ -83,8 +83,10 @@ room.on('member_join', member => {
   }
 });
 
+;
 room.on('message', message => {
-  const {content, clientId, member} = message;
+  const {data, clientId, member} = message;
+  const {content} = data;
   const newMessage = document.createElement('p');
 
   console.log('Received message:', message);
@@ -95,10 +97,9 @@ room.on('message', message => {
   const color = clientData.color;
   const name = clientData.name || clientName;
 
-
   // Set the HTML content of the <p> element
   newMessage.innerHTML = `<span style="color: ${color};">${name}: </span>${content}`;
-
+  
   // Append the new <p> element to the "messages" div
   messages.appendChild(newMessage);
 });
