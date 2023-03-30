@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <script src="https://cdn.scaledrone.com/scaledrone.min.js" defer></script>
-    <script defer src="./script.js"></script>
+
+    <script defer src="./login.js"></script>
+    <script defer src="./chatRoom.js"></script>
 
     <title>Algebra Chat - Loby room</title>
 </head>
@@ -16,7 +18,7 @@
     </header>
 
     <main>
-        <div class="login-form">
+        <div id="login">
             <h2>Please feel free joining the funniest room ever</h2>
             <form id="login-form">
                 <button id="login-btn" type="submit">Enter Room</button>
@@ -27,25 +29,18 @@
         <div id="chat-interface">
 
             <div class="mainWraper">
-                <div class="messages">
-                    <div class="leftText">
-                        <p class="nameLeft"></p>
-                        <p></p>
-                    </div>
-
-                    <div class="rightText">
-                        <p class="nameRight"></p>
-                        <p></p>
-                    </div>
+                <div id="messages">
                 </div>
             </div>
 
             <div class="chatText">
-                <input type="text" name="chat" id="chat" placeholder="Upišite poruku"/>
-                <button class="sendBtn">
+                <input type="text" name="chat" id="chatInput" placeholder="Upišite poruku"/>
+                <button id="sendBtn">
                     <img src="./119167_chat_512x512.png" alt="send" width="256" height="256">
                 </button>
             </div>
+
+            <p id="scaledroneStatus"></p>
         </div>
     </main>
     
