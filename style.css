@@ -21,7 +21,7 @@ header h1 {
 }
 .mainWraper {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column-reverse; 
     align-items: flex-start;
     margin: 10px auto;
     padding: 10px;
@@ -29,7 +29,7 @@ header h1 {
     height: 450px;
     border: 1px solid grey;
     border-radius: 20px;
-    background: linear-gradient(to bottom, #7fcdf9, #b1b1fc, #6b92bf);
+    background:  #f2f5fc;
     overflow-y: scroll;
 }
 .mainWraper::-webkit-scrollbar {
@@ -41,22 +41,19 @@ header h1 {
     line-height: 16px;
     padding: 5px;
 }
-.newMessage {
-    margin-top: auto;
-    margin-bottom: 6px;
-    max-width: 80%;
-  }
+#messages  {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    width: 100%;
+}
 .leftText {
-    border-radius: 10px 10px 10px 0;
-    margin-bottom: 6px;
+    margin-right: auto;
+    margin-bottom: 8px;
 }
-.nameRight {
-    text-align: right;
-}
+
 .rightText {
-    margin: 0 0 0 auto;
-    border-radius: 10px 10px 0 10px;
-    text-align: right;
+    margin-left: auto;
     margin-bottom: 8px;
 }
 .chatText {
@@ -141,6 +138,3 @@ a {
 #chat-interface {
   display: none;
 }
-
-
-
