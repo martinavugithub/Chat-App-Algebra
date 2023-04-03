@@ -4,21 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Chat, App" />
+    <meta name="author" content="Martina Popović" />
+    <meta name="description" content="Chat App" />
     <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.scaledrone.com/scaledrone.min.js" defer></script>
+
+    <script defer src="./login.js"></script>
+    
+
     <title>Algebra Chat - Loby room</title>
 </head>
 <body>
     <header>
-        <h1>Lobby Room</h1>
+        <h1>Chat Room Algebra</h1>
     </header>
+
     <main>
-        <div class="login-form">
-          <form id="login-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <button type="submit"><a href="./chatRoom.html" >Enter Room</a></button>
-          </form>
+        <div id="login">
+            <h2>Please feel free joining the funniest room ever</h2>
+            <form id="login-form">
+                <button id="login-btn" type="submit">Enter Room</button>
+                <p id="pokemon-name"></p>
+            </form>
+        </div>
+
+        <div id="chat-interface">
+
+            <div class="mainWraper">
+                <div id="messages">
+                </div>
+            </div>
+
+            <div class="chatText">
+                <input type="text" name="chat" id="chatInput" placeholder="Upišite poruku"/>
+                <button id="sendBtn">
+                    <img src="./119167_chat_512x512.png" alt="send" width="256" height="256">
+                </button>
+            </div>
+
+            <p id="scaledroneStatus"></p>
         </div>
     </main>
+
+    <script defer src="./chatRoom.js"></script>
+    
 </body>
 </html>
