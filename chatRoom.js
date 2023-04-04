@@ -83,6 +83,10 @@ room.on('member_join', member => {
     console.log(`A new member joined the room`);
   }
 });
+
+document.getElementById('pokemonName').textContent = clientName;
+document.getElementById('pokemonName').style.color = clientColor;
+
 /* MESSAGES */
 room.on('message', message => {
   const { content, name, color } = message.data;
