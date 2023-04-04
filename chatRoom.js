@@ -1,6 +1,6 @@
-// Scaledrone channel ID
+/* Scaledrone channel ID */
 const CHANNEL_ID = 'gM860Lw7cfNCaIcl';
-const ROOM_NAME = 'lobby';
+const ROOM_NAME = 'Algebra';
 
 
 /* UI */
@@ -14,12 +14,12 @@ const members = {};
 let drone = null;
 let clientName = '';
 
-// Generate a random color for the user
+/* Generate a random color for the user */
 const randomColor = () => {
   return '#' + Math.floor(Math.random() * 0xffffff).toString(16);
 };
 
-// Generate a random Pokemon name for the user
+/* Generate a random Pokemon name for the user */
 const randomPokemon = () => {
   const pokemonNames = [
     'Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu', 'Jigglypuff', 'Meowth', 'Psyduck', 'Snorlax', 'Dragonite', 'Mewtwo', 'Chikorita',
@@ -30,7 +30,7 @@ const randomPokemon = () => {
   return pokemonNames[Math.floor(Math.random() * pokemonNames.length)];
 };
 
-// Define drone clientData here
+/* Define drone clientData here */
 const clientData = {
   name: randomPokemon(),
   color: randomColor(),
@@ -46,7 +46,7 @@ clientName = clientData.name;
 clientColor = clientData.color;
 console.log('My name is:', clientName, clientColor);
 
-// Wait for Scaledrone connection to be established
+/* Wait for Scaledrone connection to be established */
 drone.on('open', error => {
   if (error) {
     console.error(error);
@@ -83,7 +83,7 @@ room.on('member_join', member => {
     console.log(`A new member joined the room`);
   }
 });
-
+/* MESSAGES */
 room.on('message', message => {
   const { content, name, color } = message.data;
   const newMessage = document.createElement('p');
@@ -99,7 +99,7 @@ room.on('message', message => {
 });
 
 
-sendButton.addEventListener('click', e => {
+function handleSendMessage(e) {
   e.preventDefault();
 
   if (!chatInput.value) {
@@ -108,8 +108,8 @@ sendButton.addEventListener('click', e => {
   }
   if (chatInput.value && chatInput.value.length > 100) {
     alert('Your message is too long!');
-   return;
- }
+    return;
+  }
 
   console.log('Sending message:', chatInput.value);
 
@@ -125,4 +125,12 @@ sendButton.addEventListener('click', e => {
   });
 
   chatInput.value = '';
-}); 
+}
+
+sendButton.addEventListener('click', handleSendMessage);
+
+chatInput.addEventListener('keypress', function(event) {
+  if (event.key === 'Enter') {
+    handleSendMessage(event);
+  }
+});
