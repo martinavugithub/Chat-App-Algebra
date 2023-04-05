@@ -69,6 +69,7 @@ const room = drone.subscribe(ROOM_NAME);
 
 room.on('open', error => {
   if (error) {
+    scaleDroneStatusLabel.textContent = `Error: Could not connect to room 🔴`
     return console.error(error);
   }
   scaleDroneStatusLabel.textContent = `Connected: ${ROOM_NAME} 🟢`;
