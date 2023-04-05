@@ -56,6 +56,7 @@ header h1 {
 }
 .leftText span {
     max-width: 80%;
+    word-wrap: break-word;
 }
 .rightText {
     margin-left: auto;
@@ -66,6 +67,7 @@ header h1 {
 }
 .rightText span {
     max-width: 80%;
+    word-wrap: break-word;
 }
 #pokemonName {
     font-size: 14px;
