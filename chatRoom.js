@@ -106,7 +106,7 @@ room.on('message', message => {
 function handleSendMessage(e) {
   e.preventDefault();
 
-  if (!chatInput.value) {
+  if (!chatInput.value.trim()) {
     alert('Error: Chat input is empty');
     return;
   }
