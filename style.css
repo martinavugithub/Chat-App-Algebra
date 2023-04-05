@@ -50,11 +50,22 @@ header h1 {
 .leftText {
     margin-right: auto;
     margin-bottom: 8px;
+    max-width: 80%;
+    border-radius: 10px;
+    border: 1px solid grey;
 }
-
+.leftText span {
+    max-width: 80%;
+}
 .rightText {
     margin-left: auto;
     margin-bottom: 8px;
+    max-width: 80%;
+    border-radius: 10px;
+    border: 1px solid grey;
+}
+.rightText span {
+    max-width: 80%;
 }
 #pokemonName {
     font-size: 14px;

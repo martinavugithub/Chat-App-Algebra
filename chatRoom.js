@@ -71,7 +71,7 @@ room.on('open', error => {
   if (error) {
     return console.error(error);
   }
-  scaleDroneStatusLabel.textContent = `Connected: ${ROOM_NAME}`;
+  scaleDroneStatusLabel.textContent = `Connected: ${ROOM_NAME} 🟢`;
   console.log(`Room ${ROOM_NAME} is now open`);
 });
 
@@ -95,9 +95,9 @@ room.on('message', message => {
   messages.appendChild(newMessage);
 
   if (name == clientName) { // da li je poruka od mene?
-    newMessage.classList.add("leftText"); // dodaj klasu za desno
+    newMessage.classList.add("rightText"); // dodaj klasu za desno
   } else {
-    newMessage.classList.add("rightText"); // dodaj klasu za lijevo
+    newMessage.classList.add("leftText"); // dodaj klasu za lijevo
   }
   
 });
