@@ -88,21 +88,35 @@ room.on('member_join', member => {
 document.getElementById('pokemonName').textContent = clientName;
 document.getElementById('pokemonName').style.color = clientColor;
 
-/* MESSAGES */
+const timeElement = document.getElementById('timestamp');
+const message = document.getElementById('messages');
+
 room.on('message', message => {
   const { content, name, color } = message.data;
-  const newMessage = document.createElement('p');
-  newMessage.innerHTML = `<span style="color: ${color};">${name}: </span><span style="color: ${color};">${content}</span>`;
-  messages.appendChild(newMessage);
+  const newMessageContainer = document.createElement('div'); // novi kontejner za poruku i vrijeme
+  const newMessage = document.createElement('p'); // novi element za poruku
+  const timestamp = new Date().toLocaleTimeString(); // dohvaćanje vremena
+
+  // dodavanje novog elementa za prikaz vremena
+  const timestampElement = document.createElement('span');
+  timestampElement.textContent = timestamp;
+  timestampElement.classList.add("timestamp"); // dodavanje klase za CSS stiliziranje
+  newMessageContainer.appendChild(timestampElement);
+
+  // dodavanje teksta poruke
+  const messageContent = document.createElement('span');
+  messageContent.innerHTML = `<span style="color: ${color};">${name}: </span><span style="color: ${color};">${content}</span>`;
+  newMessage.appendChild(messageContent);
+  newMessageContainer.appendChild(newMessage);
+
+  messages.appendChild(newMessageContainer);
 
   if (name == clientName) { // da li je poruka od mene?
-    newMessage.classList.add("rightText"); // dodaj klasu za desno
+    newMessageContainer.classList.add("rightText"); // dodaj klasu za desno
   } else {
-    newMessage.classList.add("leftText"); // dodaj klasu za lijevo
+    newMessageContainer.classList.add("leftText"); // dodaj klasu za lijevo
   }
-  
 });
-
 
 function handleSendMessage(e) {
   e.preventDefault();
