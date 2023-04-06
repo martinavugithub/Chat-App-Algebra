@@ -58,6 +58,9 @@ header h1 {
     max-width: 80%;
     word-wrap: break-word;
 }
+.leftText span.timestamp {
+    font-size: 10px;
+}
 .rightText {
     margin-left: auto;
     margin-bottom: 8px;
@@ -68,6 +71,9 @@ header h1 {
 .rightText span {
     max-width: 80%;
     word-wrap: break-word;
+}
+.rightText span.timestamp {
+    font-size: 10px;
 }
 #pokemonName {
     font-size: 14px;
