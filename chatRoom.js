@@ -65,7 +65,7 @@ drone.on('error', error => {
 
 /* SCALEDRONE ROOM */
 
-const room = drone.subscribe(ROOM_NAME);
+const room = drone.subscribe(`observable-${ROOM_NAME}`);
 
 room.on('open', error => {
   if (error) {
@@ -76,14 +76,30 @@ room.on('open', error => {
   console.log(`Room ${ROOM_NAME} is now open`);
 });
 
+room.on('members', m => {
+  m.forEach(member => {
+    members[member.clientData.id] = member;
+  });
+});
+
 room.on('member_join', member => {
   members[member.id] = member.clientData;
   if (member.clientData) {
     scaleDroneStatusLabel.textContent =`${member.clientData.name} joined the room`;
+    Toastify({ text: `${member.clientData.name} joined the room` }).showToast();
   } else {
     console.log(`A new member joined the room`);
   }
 });
+
+room.on('member_leave', (member) => {
+  member = members[member.id];
+  if (member) {
+    delete members[member.id];
+    Toastify({ text: `${member.name} left the room` }).showToast();
+    console.log(`${member.name} left the room`);
+  }
+ });
 
 document.getElementById('pokemonName').textContent = clientName;
 document.getElementById('pokemonName').style.color = clientColor;

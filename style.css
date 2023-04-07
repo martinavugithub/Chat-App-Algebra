@@ -60,6 +60,7 @@ header h1 {
 }
 .leftText span.timestamp {
     font-size: 10px;
+    padding: 10px;
 }
 .rightText {
     margin-left: auto;
@@ -74,6 +75,7 @@ header h1 {
 }
 .rightText span.timestamp {
     font-size: 10px;
+    padding: 10px;
 }
 #pokemonName {
     font-size: 14px;
