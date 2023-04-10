@@ -1,6 +1,6 @@
 /* Scaledrone channel ID */
 const CHANNEL_ID = 'gM860Lw7cfNCaIcl';
-const ROOM_NAME = 'Algebra';
+const ROOM_NAME = 'observable-algebra';
 
 
 /* UI */
@@ -65,7 +65,7 @@ drone.on('error', error => {
 
 /* SCALEDRONE ROOM */
 
-const room = drone.subscribe(`observable-${ROOM_NAME}`);
+const room = drone.subscribe(`${ROOM_NAME}`);
 
 room.on('open', error => {
   if (error) {
