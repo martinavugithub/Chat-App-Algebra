@@ -23,9 +23,14 @@ Credits
 This app was built by Martina Popović as a project for Front-End Developer course on Algebra. It uses the following technologies:
 
 HTML
+
 CSS
+
 JavaScript
+
 Scaledrone
+
+
 License
 
 This app is released under the MIT License.
