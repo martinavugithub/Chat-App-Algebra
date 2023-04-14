@@ -175,6 +175,10 @@ a {
     header {
       width: 80%;
     }
+
+    #scaledroneStatus {
+        display: none;
+    }
     
     .mainWraper {
       width: 80%;
