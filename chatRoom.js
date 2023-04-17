@@ -20,15 +20,17 @@ const randomColor = () => {
 };
 
 /* Generate a random Pokemon name for the user */
+const pokemonNames = [
+  'Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu', 'Jigglypuff', 'Meowth', 'Psyduck', 'Snorlax', 'Dragonite', 'Mewtwo', 'Chikorita',
+  'Cyndaquil', 'Totodile', 'Togepi', 'Mareep', 'Typhlosion', 'Feraligatr', 'Unown', 'Wobbuffet', 'Girafarig', 'Shuckle', 'Swinub',
+  'Lugia', 'Ho-Oh', 'Treecko', 'Torchic', 'Mudkip', 'Beautifly', 'Mightyena', 'Wurmple', 'Gardevoir', 'Exploud', 'Kyogre', 'Groudon',
+  'Rayquaza', 'Turtwig', 'Chimchar', 'Piplup', 'Luxray', 'Lucario'
+];
+
 const randomPokemon = () => {
-  const pokemonNames = [
-    'Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu', 'Jigglypuff', 'Meowth', 'Psyduck', 'Snorlax', 'Dragonite', 'Mewtwo', 'Chikorita',
-    'Cyndaquil', 'Totodile', 'Togepi', 'Mareep', 'Typhlosion', 'Feraligatr', 'Unown', 'Wobbuffet', 'Girafarig', 'Shuckle', 'Swinub',
-    'Lugia', 'Ho-Oh', 'Treecko', 'Torchic', 'Mudkip', 'Beautifly', 'Mightyena', 'Wurmple', 'Gardevoir', 'Exploud', 'Kyogre', 'Groudon',
-    'Rayquaza', 'Turtwig', 'Chimchar', 'Piplup', 'Luxray', 'Lucario'
-  ];
   return pokemonNames[Math.floor(Math.random() * pokemonNames.length)];
 };
+
 
 /* Define drone clientData here */
 const clientData = {
@@ -44,14 +46,16 @@ drone = new ScaleDrone(CHANNEL_ID, {
 
 clientName = clientData.name;
 clientColor = clientData.color;
-console.log('My name is:', clientName, clientColor);
 
 /* Wait for Scaledrone connection to be established */
-drone.on('open', error => {
-  if (error) {
-    console.error(error);
-    return;
-  }
+drone.on('open', function() {
+  console.log('Connected to drone.');
+
+drone.on('error', function(error) {
+  alert('Error connecting to drone: ' + error.message);
+  console.error('Error connecting to drone:', error);
+});
+
   scaleDroneStatusLabel.textContent = 'Open'
 });
 
@@ -73,7 +77,7 @@ room.on('open', error => {
     return console.error(error);
   }
   scaleDroneStatusLabel.textContent = `Connected: ${ROOM_NAME} 🟢`;
-  console.log(`Room ${ROOM_NAME} is now open`);
+ 
 });
 
 room.on('members', m => {
@@ -97,7 +101,7 @@ room.on('member_leave', (member) => {
   if (member) {
     delete members[member.id];
     Toastify({ text: `${member.name} left the room` }).showToast();
-    console.log(`${member.name} left the room`);
+    
   }
  });
 
@@ -146,7 +150,6 @@ function handleSendMessage(e) {
     return;
   }
 
-  console.log('Sending message:', chatInput.value);
 
   const message = {
     content: chatInput.value,
