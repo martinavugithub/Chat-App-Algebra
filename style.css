@@ -13,7 +13,6 @@ header {
     border-radius: 20px;
     border: 1px solid grey;
 }
-
 header h1 {
     text-transform: uppercase;
     font-size: 40px;
@@ -145,7 +144,6 @@ h2 {
     display: flex;
     justify-content: center;
 }
-
 button[type="submit"] {
     padding: 10px;
     margin: 30px auto;
@@ -178,55 +176,44 @@ a {
     header {
       width: 80%;
     }
-
     #scaledroneStatus {
         display: none;
-    }
-    
+    }  
     .mainWraper {
       width: 80%;
       height: 300px;
-    }
-    
+    }   
     .mainWraper p {
       font-size: 10px;
       line-height: 14px;
-    }
-    
+    }   
     .leftText, .rightText {
       max-width: 70%;
-    }
-    
+    }   
     #pokemonName {
       font-size: 12px;
-    }
-    
+    }    
     .chatText {
       width: 80%;
-    }
-    
+    }    
     .chatText input {
       width: 70%;
       font-size: 12px;
       line-height: 16px;
       padding: 8px;
-    }
-    
+    }    
     #login {
       width: 80%;
       height: 300px;
       padding: 30px;
-    }
-    
+    }    
     label {
       font-size: 16px;
       margin-bottom: 8px;
-    }
-    
+    }    
     h2 {
       font-size: 20px;
-    }
-    
+    }    
     button[type="submit"] {
       margin: 20px auto;
       font-size: 16px;

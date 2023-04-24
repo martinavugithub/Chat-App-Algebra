@@ -50,11 +50,11 @@ clientColor = clientData.color;
 /* Wait for Scaledrone connection to be established */
 drone.on('open', function() {
   console.log('Connected to drone.');
+});
 
 drone.on('error', function(error) {
   alert('Error connecting to drone: ' + error.message);
   console.error('Error connecting to drone:', error);
-});
 
   scaleDroneStatusLabel.textContent = 'Open'
 });
@@ -149,7 +149,6 @@ function handleSendMessage(e) {
     alert('Your message is too long!');
     return;
   }
-
 
   const message = {
     content: chatInput.value,
