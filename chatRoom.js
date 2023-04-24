@@ -1,9 +1,6 @@
-/* Scaledrone channel ID */
 const CHANNEL_ID = 'gM860Lw7cfNCaIcl';
 const ROOM_NAME = 'observable-algebra';
 
-
-/* UI */
 const scaleDroneStatusLabel = document.getElementById('scaledroneStatus');
 const sendButton = document.getElementById('sendBtn');
 const chatInput = document.getElementById('chatInput');
@@ -14,12 +11,10 @@ const members = {};
 let drone = null;
 let clientName = '';
 
-/* Generate a random color for the user */
 const randomColor = () => {
   return '#' + Math.floor(Math.random() * 0xffffff).toString(16);
 };
 
-/* Generate a random Pokemon name for the user */
 const pokemonNames = [
   'Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu', 'Jigglypuff', 'Meowth', 'Psyduck', 'Snorlax', 'Dragonite', 'Mewtwo', 'Chikorita',
   'Cyndaquil', 'Totodile', 'Togepi', 'Mareep', 'Typhlosion', 'Feraligatr', 'Unown', 'Wobbuffet', 'Girafarig', 'Shuckle', 'Swinub',
@@ -31,14 +26,10 @@ const randomPokemon = () => {
   return pokemonNames[Math.floor(Math.random() * pokemonNames.length)];
 };
 
-
-/* Define drone clientData here */
 const clientData = {
   name: randomPokemon(),
   color: randomColor(),
 };
-
-/* SCALEDRONE */
 
 drone = new ScaleDrone(CHANNEL_ID, {
   data: clientData
@@ -47,7 +38,6 @@ drone = new ScaleDrone(CHANNEL_ID, {
 clientName = clientData.name;
 clientColor = clientData.color;
 
-/* Wait for Scaledrone connection to be established */
 drone.on('open', function() {
   console.log('Connected to drone.');
 });
@@ -66,8 +56,6 @@ drone.on('reconnect', () => {
 drone.on('error', error => {
   scaleDroneStatusLabel.textContent = `Error: ${error}`
 });
-
-/* SCALEDRONE ROOM */
 
 const room = drone.subscribe(`${ROOM_NAME}`);
 
@@ -100,10 +88,9 @@ room.on('member_leave', (member) => {
   member = members[member.id];
   if (member) {
     delete members[member.id];
-    Toastify({ text: `${member.name} left the room` }).showToast();
-    
+    Toastify({ text: `${member.name} left the room` }).showToast(); 
   }
- });
+});
 
 document.getElementById('pokemonName').textContent = clientName;
 document.getElementById('pokemonName').style.color = clientColor;
@@ -113,17 +100,15 @@ const message = document.getElementById('messages');
 
 room.on('message', message => {
   const { content, name, color } = message.data;
-  const newMessageContainer = document.createElement('div'); // novi kontejner za poruku i vrijeme
-  const newMessage = document.createElement('p'); // novi element za poruku
-  const timestamp = new Date().toLocaleTimeString(); // dohvaćanje vremena
+  const newMessageContainer = document.createElement('div'); 
+  const newMessage = document.createElement('p'); 
+  const timestamp = new Date().toLocaleTimeString(); 
 
-  // dodavanje novog elementa za prikaz vremena
   const timestampElement = document.createElement('span');
   timestampElement.textContent = timestamp;
-  timestampElement.classList.add("timestamp"); // dodavanje klase za CSS stiliziranje
+  timestampElement.classList.add("timestamp"); 
   newMessageContainer.appendChild(timestampElement);
 
-  // dodavanje teksta poruke
   const messageContent = document.createElement('span');
   messageContent.innerHTML = `<span style="color: ${color};">${name}: </span><span style="color: ${color};">${content}</span>`;
   newMessage.appendChild(messageContent);
@@ -131,10 +116,10 @@ room.on('message', message => {
 
   messages.appendChild(newMessageContainer);
 
-  if (name == clientName) { // da li je poruka od mene?
-    newMessageContainer.classList.add("rightText"); // dodaj klasu za desno
+  if (name == clientName) { 
+    newMessageContainer.classList.add("rightText"); 
   } else {
-    newMessageContainer.classList.add("leftText"); // dodaj klasu za lijevo
+    newMessageContainer.classList.add("leftText"); 
   }
 });
 
@@ -166,7 +151,7 @@ function handleSendMessage(e) {
 
 sendButton.addEventListener('click', handleSendMessage);
 
-chatInput.addEventListener('keypress', function(event) {
+chatInput.addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
     handleSendMessage(event);
   }
